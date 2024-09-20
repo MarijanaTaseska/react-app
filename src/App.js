@@ -1,10 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { getTodos , addTodo, putTodo, deleteTodo} from './actions/todos';
-
-
 
 
 function App() {
@@ -12,14 +9,17 @@ function App() {
   const [todos, setTodos] = useState([])
 
   useEffect(()=> {
-    getData()
+   getData()
   },[])
 
   const getData = () => {
-    getTodos().then(res => {
+    getTodos()
+    .then(res => 
       setTodos(res)
-    })
+    )
+    .catch(err => console.log(err.response))
   }
+
   const postTodo = (evt) => {
     if(todo !== ''){
       addTodo(todo)
@@ -39,6 +39,7 @@ function App() {
     .then(() => {
       getData();
     })
+    .catch(err => console.log(err.response))
   }
   const deleteItem = (id) => {
   deleteTodo(id).then(res =>{
@@ -51,7 +52,7 @@ function App() {
      <input className='add-todo' value={todo} onChange={(e) => setTodo(e.target.value)}/>
      <button className='submit-button ' onClick={() => postTodo(todo)}>Submit</button>
      {
-      todos.map((todo,index)=>(
+      todos?.map((todo,index)=>(
         <div key={index}>
           <ul className='todo-list'>
             <span id="todo-text" className={todo.completed ? 'done' : ''}>{todo.description}</span>
@@ -67,3 +68,6 @@ function App() {
 }
 
 export default App;
+
+
+

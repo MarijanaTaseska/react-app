@@ -1,11 +1,15 @@
 import axios from "axios"
 
 const baseURL = 'http://localhost:3002/todos'
-export const getTodos = () => {
-    return axios.get(baseURL)
-    .then(res => res.data
-    )
-    .catch(err => console.log(err.response))
+
+export const getTodos = async () => {
+   try {
+        const res = await axios.get(baseURL)
+     console.log(res)
+    } catch (err) {
+     console.log(err.response)
+    }
+   
 }
 
 export const addTodo = (description) => {
